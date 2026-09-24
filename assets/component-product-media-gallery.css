@@ -1,19 +1,11 @@
-.product-images-wrapper {
-  --gallery-thumb-width: 8rem;
-  --gallery-gap: 3.6rem;
-  --gallery-slide-gap: 1.6rem;
-  --gallery-peek: 15%;
-  --gallery-arrow-size: 5.6rem;
-}
-
 .product-carousel-wrapper {
   display: grid;
-  grid-template-columns: var(--gallery-thumb-width) minmax(0, 1fr);
-  column-gap: var(--gallery-gap);
+  grid-template-columns: 8rem minmax(0, 1fr);
+  column-gap: 3.6rem;
   align-items: start;
 }
 
-/* ---------- Main slider ---------- */
+/* Main slider */
 
 .product__image-slider {
   grid-column: 2;
@@ -39,7 +31,7 @@
 }
 
 .product__image-slider .carousel-cell {
-  margin-right: var(--gallery-slide-gap);
+  margin-right: 1.6rem;
   height: 100%;
   min-height: 100%;
   max-height: 100%;
@@ -58,8 +50,8 @@
   position: static;
   order: 1;
   transform: none;
-  width: var(--gallery-arrow-size);
-  height: var(--gallery-arrow-size);
+  width: 5.6rem;
+  height: 5.6rem;
   margin-top: 6.4rem;
   display: flex;
   align-items: center;
@@ -87,7 +79,7 @@
 }
 
 .product__image-slider .slick-next {
-  margin-right: var(--gallery-peek);
+  margin-right: 15%;
 }
 
 .product__image-slider .slick-arrow:hover,
@@ -101,7 +93,6 @@
   cursor: default;
 }
 
-/* Replace slick-theme's icon font with a CSS chevron */
 .product__image-slider .slick-arrow::before {
   content: "";
   width: 1.2rem;
@@ -119,7 +110,7 @@
   transform: translateX(-0.3rem) rotate(45deg);
 }
 
-/* ---------- Thumbnails ---------- */
+/* Thumbnails */
 
 .product__image-thumbnail {
   grid-column: 1;
@@ -130,15 +121,12 @@
   overflow: hidden;
 }
 
-/* When thumbnails are also a slick slider (vertical: true) */
 .product__image-thumbnail .slick-list {
   overflow: visible;
 }
 
 .product__image-thumbnail .carousel-cell-thumb {
   padding: 0.3rem;
-  /* border: 0.2rem solid transparent; */
-  /* cursor: pointer; */
   transition: border-color 0.2s ease;
 }
 
@@ -158,7 +146,7 @@
   object-fit: cover;
 }
 
-/* ---------- Mobile: thumbnails become a row under the slider ---------- */
+/* Mobile: thumbnails become a row under the slider */
 
 @media screen and (max-width: 749px) {
   .product-carousel-wrapper {
@@ -182,7 +170,7 @@
   }
 
   .product__image-thumbnail .carousel-cell-thumb {
-    flex: 0 0 var(--gallery-thumb-width);
+    flex: 0 0 8rem;
   }
 
   .product__image-slider .slick-arrow {
