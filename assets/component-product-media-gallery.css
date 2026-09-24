@@ -142,6 +142,10 @@
   transition: border-color 0.2s ease;
 }
 
+.product__image-thumbnail .carousel-cell-thumb:hover {
+  cursor: pointer;
+}
+
 .product__image-thumbnail.slick-slider .carousel-cell-thumb {
   margin-bottom: 0.8rem;
 }
