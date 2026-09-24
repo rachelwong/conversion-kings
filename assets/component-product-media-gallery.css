@@ -1,0 +1,187 @@
+.product-images-wrapper {
+  --gallery-thumb-width: 8rem;
+  --gallery-gap: 3.6rem;
+  --gallery-slide-gap: 1.6rem;
+  --gallery-peek: 15%;
+  --gallery-arrow-size: 5.6rem;
+}
+
+.product-carousel-wrapper {
+  display: grid;
+  grid-template-columns: var(--gallery-thumb-width) minmax(0, 1fr);
+  column-gap: var(--gallery-gap);
+  align-items: start;
+}
+
+/* ---------- Main slider ---------- */
+
+.product__image-slider {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+}
+
+.product__image-slider .slick-track {
+  display: flex;
+}
+
+.product__image-slider.slick-slider {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.8rem;
+  margin-bottom: 0;
+}
+
+.product__image-slider .slick-list {
+  flex: 0 0 100%;
+  order: 0;
+}
+
+.product__image-slider .carousel-cell {
+  margin-right: var(--gallery-slide-gap);
+  height: 100%;
+  min-height: 100%;
+  max-height: 100%;
+}
+
+.product__image-slider .carousel-cell img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  aspect-ratio: 4 /5;
+}
+
+/* Arrows: sit below the slider, right aligned to the active slide */
+.product__image-slider .slick-arrow {
+  position: static;
+  order: 1;
+  transform: none;
+  width: var(--gallery-arrow-size);
+  height: var(--gallery-arrow-size);
+  margin-top: 6.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(var(--color-background));
+  border: 0.1rem solid rgb(var(--color-foreground));
+  color: rgb(var(--color-foreground));
+  cursor: pointer;
+  font-size: 0;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.product__image-slider .slick-arrow:before {
+  color: rgb(var(--color-foreground));
+}
+
+.product__image-slider .slick-arrow:hover:before {
+  color: white;
+}
+
+.product__image-slider .slick-arrow {
+  border-radius: 50%;
+}
+
+.product__image-slider .slick-next {
+  margin-right: var(--gallery-peek);
+}
+
+.product__image-slider .slick-arrow:hover,
+.product__image-slider .slick-arrow:focus-visible {
+  background: rgb(var(--color-foreground));
+  color: rgb(var(--color-background));
+}
+
+.product__image-slider .slick-arrow.slick-disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+/* Replace slick-theme's icon font with a CSS chevron */
+.product__image-slider .slick-arrow::before {
+  content: "";
+  width: 1.2rem;
+  height: 1.2rem;
+  border-top: 0.2rem solid currentColor;
+  border-right: 0.2rem solid currentColor;
+  opacity: 1;
+}
+
+.product__image-slider .slick-prev::before {
+  transform: translateX(0.3rem) rotate(-135deg);
+}
+
+.product__image-slider .slick-next::before {
+  transform: translateX(-0.3rem) rotate(45deg);
+}
+
+/* ---------- Thumbnails ---------- */
+
+.product__image-thumbnail {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  overflow: hidden;
+}
+
+/* When thumbnails are also a slick slider (vertical: true) */
+.product__image-thumbnail .slick-list {
+  overflow: visible;
+}
+
+.product__image-thumbnail .carousel-cell-thumb {
+  padding: 0.3rem;
+  /* border: 0.2rem solid transparent; */
+  /* cursor: pointer; */
+  transition: border-color 0.2s ease;
+}
+
+.product__image-thumbnail.slick-slider .carousel-cell-thumb {
+  margin-bottom: 0.8rem;
+}
+
+.product__image-thumbnail img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 0.9;
+  object-fit: cover;
+}
+
+/* ---------- Mobile: thumbnails become a row under the slider ---------- */
+
+@media screen and (max-width: 749px) {
+  .product-carousel-wrapper {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 1.6rem;
+  }
+
+  .product__image-slider,
+  .product__image-thumbnail {
+    grid-column: 1;
+  }
+
+  .product__image-slider {
+    grid-row: 1;
+  }
+
+  .product__image-thumbnail {
+    grid-row: 2;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .product__image-thumbnail .carousel-cell-thumb {
+    flex: 0 0 var(--gallery-thumb-width);
+  }
+
+  .product__image-slider .slick-arrow {
+    margin-top: 1.6rem;
+  }
+}
