@@ -1,3 +1,6 @@
+{{ 'component-product-media-gallery.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product-media-gallery.js' | asset_url }}" defer="defer"></script>
+
 {% comment %}
   Renders a product media gallery. Should be used with 'media-gallery.js'
   Also see 'product-media-modal'
@@ -43,23 +46,40 @@
 -%}
 
 <div class="product-images-wrapper">
-  {%- assign media_position = 1 -%}
-  {%- assign media_count = product.media.size -%}
-  {%- for media in product.media -%}
-    {% render 'product-thumbnail',
-      media: media,
-      media_count: media_count,
-      position: media_position,
-      desktop_layout: section.settings.gallery_layout,
-      mobile_layout: section.settings.mobile_thumbnails,
-      loop: section.settings.enable_video_looping,
-      modal_id: section.id,
-      xr_button: true,
-      media_width: media_width,
-      media_fit: section.settings.media_fit,
-      constrain_to_viewport: section.settings.constrain_to_viewport,
-      lazy_load: false
-    %}
-    {%- assign media_position = media_position | plus: 1 -%}
-{%- endfor -%}
+{% if product.media.size > 0 %}
+  <product-carousel-wrapper class="product-carousel-wrapper" data-media="{{ product.media.size }}">
+    <!-- Main carousel -->
+    <div class="carousel product__image-slider" role="document" aria-label="{{ 'products.modal.label' | t }}" tabindex="0">
+      {%- for media in product.media -%}
+        <div class="carousel-cell">
+          <img 
+              src="{{ media.preview_image | image_url: width: 1200 }}"
+              srcset="{{ media.preview_image | image_url: width: 480 }} 480w, {{ media.preview_image | image_url: width: 720 }} 720w, {{ media.preview_image | image_url: width: 1080 }} 1080w, {{ media.preview_image | image_url: width: 1440 }} 1440w"
+              sizes="(min-width: 990px) 55vw, 100vw"
+              width="{{ media.preview_image.width }}"
+              height="{{ media.preview_image.height }}"
+              alt="{{ media.alt | escape }}"
+              data-media-id="{{ media.id }}"
+              style="width: 100%; height: auto;"
+            />
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <!-- Thumbnail navigation (if more than 1 image) -->
+    {% if product.media.size > 1 %}
+      <div class="carousel product__image-thumbnail">
+        {%- for media in product.media -%}
+          <button class="carousel-cell-thumb" onClick="handleThumbnailClick('{{product.media.id}}')">
+            {% if media.media_type == "video" %}
+              {{ media | image_url: width: 150 | image_tag: alt: media.alt }}
+            {% else %}
+              {{ media | image_url: width: 150 | image_tag: alt: media.alt }}
+            {% endif %}
+          </button>
+        {%- endfor -%}
+      </div>
+    {% endif %}
+  </product-carousel-wrapper>
+{% endif %}
 </div>
