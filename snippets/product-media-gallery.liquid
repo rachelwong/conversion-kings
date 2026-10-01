@@ -47,7 +47,13 @@
 
 <div class="product-images-wrapper">
 {% if product.media.size > 0 %}
-  <product-carousel-wrapper class="product-carousel-wrapper" data-media="{{ product.media.size }}">
+    <product-carousel-wrapper
+      class="product-carousel-wrapper"
+      data-media="{{ product.media.size }}"
+      {% if variant.featured_image %}
+        data-initial-slide="{{ variant.featured_image.position | minus: 1 }}"
+      {% endif %}
+    >
     <!-- Main carousel -->
     <div class="carousel product__image-slider" role="document" aria-label="{{ 'products.modal.label' | t }}" tabindex="0">
       {%- for media in product.media -%}
@@ -70,8 +76,8 @@
     {% if product.media.size > 1 %}
       <div class="carousel product__image-thumbnail">
         {%- for media in product.media -%}
-          <button class="carousel-cell-thumb" onClick="handleThumbnailClick('{{product.media.id}}')">
-            {% if media.media_type == "video" %}
+            <button class="carousel-cell-thumb">
+              {% if media.media_type == 'video' %}
               {{ media | image_url: width: 150 | image_tag: alt: media.alt }}
             {% else %}
               {{ media | image_url: width: 150 | image_tag: alt: media.alt }}

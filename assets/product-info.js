@@ -138,7 +138,9 @@ if (!customElements.get('product-info')) {
       }
 
       getSelectedVariant(productInfoNode) {
-        const selectedVariant = productInfoNode.querySelector('variant-selects[data-selected-variant]')?.innerHTML;
+        const selectedVariant = productInfoNode.querySelector(
+          "variant-selects [data-selected-variant]",
+        )?.innerHTML;
         return !!selectedVariant ? JSON.parse(selectedVariant) : null;
       }
 
