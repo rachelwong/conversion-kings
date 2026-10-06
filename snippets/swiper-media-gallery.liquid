@@ -1,0 +1,77 @@
+{{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer></script>
+<script src="{{ 'swiper-media-gallery.js' | asset_url }}" defer></script>
+{{ 'component-product-media-gallery.css' | asset_url | stylesheet_tag }}
+{{ 'swiper-media-gallery.css' | asset_url | stylesheet_tag }}
+
+{% comment %}
+  Renders a Swiper-based product media gallery with synced thumbnails.
+
+  Accepts:
+  - product: {Object} Product liquid object
+  - variant_images: {Array} Product images associated with a variant
+  - limit: {Number} (optional) When passed, limits the number of media items to render
+  - variant: {Object} (optional) selected variant
+
+  Usage:
+  {% render 'swiper-media-gallery', variant_images: variant_images, variant: variant %}
+{% endcomment %}
+
+<div class="product-images-wrapper">
+  {% if product.media.size > 0 %}
+    <swiper-media-gallery
+      class="swiper-media-gallery product-carousel-wrapper product-carousel-wrapper--swiper"
+      data-media="{{ product.media.size }}"
+      data-initial-slide="{{ variant.featured_image.position | default: 1 | minus: 1 }}"
+    >
+      <div class="swiper product__image-slider">
+        <div class="swiper-wrapper">
+          {% for media in product.media %}
+            <div class="swiper-slide carousel-cell">
+              <img
+                width="{{ media.preview_image.width }}"
+                height="{{ media.preview_image.height }}"
+                src="{{ media.preview_image | image_url: width: 1200 }}"
+                srcset="{{ media.preview_image | image_url: width: 480 }} 480w, {{ media.preview_image | image_url: width: 720 }} 720w, {{ media.preview_image | image_url: width: 1080 }} 1080w, {{ media.preview_image | image_url: width: 1440 }} 1440w"
+                sizes="(min-width: 990px) 55vw, 100vw"
+                alt="{{ media.alt | escape }}"
+                {% if forloop.first %}
+                  loading="eager" fetchpriority="high"
+                {% else %}
+                  loading="lazy"
+                {% endif %}
+              >
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      <!-- Navigation Elements (outside .swiper so they sit below the slider) -->
+      <div class="product__image-nav">
+        <div
+          class="swiper-button-prev"
+          role="button"
+          tabindex="0"
+          aria-label="Previous image"
+        ></div>
+        <div
+          class="swiper-button-next"
+          role="button"
+          tabindex="0"
+          aria-label="Next image"
+        ></div>
+      </div>
+      <!-- Thumbnail navigation (if more than 1 image) -->
+      {% if product.media.size > 1 %}
+        <div class="swiper product__image-thumbnail">
+          <div class="swiper-wrapper">
+            {%- for media in product.media -%}
+              <button type="button" class="swiper-slide carousel-cell-thumb">
+                {{ media | image_url: width: 150 | image_tag: alt: media.alt }}
+              </button>
+            {%- endfor -%}
+          </div>
+        </div>
+      {% endif %}
+    </swiper-media-gallery>
+  {% endif %}
+</div>
