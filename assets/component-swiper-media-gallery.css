@@ -1,0 +1,176 @@
+/* ==========================================================================
+   Swiper version (snippets/swiper-media-gallery.liquid)
+   Scoped under .product-carousel-wrapper--swiper so the Slick gallery is untouched.
+   Layout: >= 1280px vertical thumbnails on the left; < 1280px thumbnails in a row below.
+   ========================================================================== */
+
+/* Swiper sets margin-inline: auto on .swiper, which stops grid items stretching to their column */
+.product-carousel-wrapper--swiper .product__image-slider,
+.product-carousel-wrapper--swiper .product__image-thumbnail {
+  margin-inline: 0;
+}
+
+/* Slides: fixed width so the next slide peeks in from the edge of the slider */
+.product-carousel-wrapper--swiper
+  .product__image-slider
+  .swiper-slide.carousel-cell {
+  width: 34rem;
+  max-width: 80%;
+}
+
+.product-carousel-wrapper--swiper .product__image-slider .carousel-cell img {
+  aspect-ratio: 1 / 1;
+  border-radius: 0.4rem;
+}
+
+/* Arrows: square buttons below the slider, right aligned */
+.product-carousel-wrapper--swiper .product__image-nav {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.8rem;
+  margin-top: 6.4rem;
+}
+
+.product-carousel-wrapper--swiper .product__image-nav .swiper-button-prev,
+.product-carousel-wrapper--swiper .product__image-nav .swiper-button-next {
+  position: static;
+  inset: auto;
+  transform: none;
+  width: 5.6rem;
+  height: 5.6rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(var(--color-background));
+  border: 0.1rem solid rgb(var(--color-foreground));
+  border-radius: 100%;
+  color: rgb(var(--color-foreground));
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.product-carousel-wrapper--swiper .product__image-nav .swiper-button-next {
+  margin-right: 15%;
+}
+
+/* Replace Swiper's built-in icon with the theme chevron */
+.product-carousel-wrapper--swiper .product__image-nav .swiper-navigation-icon,
+.product-carousel-wrapper--swiper
+  .product__image-nav
+  .swiper-button-prev::after,
+.product-carousel-wrapper--swiper
+  .product__image-nav
+  .swiper-button-next::after {
+  display: none;
+}
+
+.product-carousel-wrapper--swiper
+  .product__image-nav
+  .swiper-button-prev::before,
+.product-carousel-wrapper--swiper
+  .product__image-nav
+  .swiper-button-next::before {
+  content: "";
+  width: 1.2rem;
+  height: 1.2rem;
+  border-top: 0.2rem solid currentColor;
+  border-right: 0.2rem solid currentColor;
+}
+
+.product-carousel-wrapper--swiper
+  .product__image-nav
+  .swiper-button-prev::before {
+  transform: translateX(0.3rem) rotate(-135deg);
+}
+
+.product-carousel-wrapper--swiper
+  .product__image-nav
+  .swiper-button-next::before {
+  transform: translateX(-0.3rem) rotate(45deg);
+}
+
+.product-carousel-wrapper--swiper .product__image-nav .swiper-button-prev:hover,
+.product-carousel-wrapper--swiper .product__image-nav .swiper-button-next:hover,
+.product-carousel-wrapper--swiper
+  .product__image-nav
+  .swiper-button-prev:focus-visible,
+.product-carousel-wrapper--swiper
+  .product__image-nav
+  .swiper-button-next:focus-visible {
+  background: rgb(var(--color-foreground));
+  color: rgb(var(--color-background));
+}
+
+.product-carousel-wrapper--swiper .product__image-nav .swiper-button-disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Thumbnails: vertical Swiper spanning the slider and arrow rows */
+.product-carousel-wrapper--swiper .product__image-thumbnail {
+  display: block;
+  grid-row: 1 / span 2;
+  align-self: stretch;
+  contain: size;
+  min-height: 0;
+}
+
+.product-carousel-wrapper--swiper
+  .product__image-thumbnail
+  .carousel-cell-thumb {
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  padding: 0;
+  background: none;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  appearance: none;
+}
+
+.product-carousel-wrapper--swiper .product__image-thumbnail img {
+  border-radius: 0.2rem;
+}
+
+/* Every thumbnail whose slide is in view gets the border */
+.product-carousel-wrapper--swiper
+  .product__image-thumbnail
+  .swiper-slide-thumb-active {
+  border-color: rgb(var(--color-foreground));
+}
+
+/* Below 1280px: single column, thumbnails in a row under the slider, swipe only */
+@media screen and (max-width: 1279px) {
+  .product-carousel-wrapper--swiper {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 1.6rem;
+  }
+
+  .product-carousel-wrapper--swiper .product__image-slider {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .product-carousel-wrapper--swiper .product__image-nav {
+    display: none;
+  }
+
+  .product-carousel-wrapper--swiper .product__image-thumbnail {
+    grid-column: 1;
+    grid-row: 2;
+    contain: none;
+    overflow: hidden;
+  }
+
+  .product-carousel-wrapper--swiper
+    .product__image-thumbnail
+    .carousel-cell-thumb {
+    width: 8rem;
+  }
+}
